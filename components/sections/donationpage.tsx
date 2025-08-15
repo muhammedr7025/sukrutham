@@ -11,23 +11,33 @@ import { useRouter } from "next/navigation"
 export default function DonationPage() {
   const [wantsCertificate, setWantsCertificate] = useState(false)
   const [amount, setAmount] = useState("1000")
+  const [termsAccepted, setTermsAccepted] = useState(false)
+  const [showTermsError, setShowTermsError] = useState(false)
   const router = useRouter()
 
   const handleAmountSelect = (value: string) => {
     setAmount(value)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!termsAccepted) {
+      setShowTermsError(true)
+      return
+    }
+    
+    setShowTermsError(false)
     router.push("/thankyou")
   }
 
   return (
-    <div className="min-h-screen lg:h-screen bg-background lg:overflow-hidden">
+    <div className="min-h-screen lg:h-screen bg-background overflow-hidden ">
       {/* Main Content */}
-      <div className="h-full flex flex-col lg:flex-row overflow-hidden px-4 lg:px-16">
+      <div className="h-full flex flex-col lg:flex-row px-4 lg:px-16 lg:max-h-screen">
         {/* Left Column - Image Grid (Fixed on desktop, scrollable on mobile) */}
-        <div className="w-full lg:w-1/2 p-3 lg:p-6 lg:overflow-hidden">
-          <div className="space-y-2 lg:space-y-4 -mt-5 lg:-mt-10">
+        <div className="w-full lg:w-1/2 p-3 lg:p-6 lg:overflow-hidden lg:h-full">
+          <div className="space-y-2 lg:space-y-4 -mt-5 lg:-mt-10 lg:h-full lg:flex lg:flex-col lg:justify-center">
             <div className="space-y-0">
               {/* Row 1: Large image LEFT + 4 small images RIGHT */}
               <div className="flex flex-col sm:flex-row gap-2 lg:gap-0 h-32 sm:h-48">
@@ -40,7 +50,7 @@ export default function DonationPage() {
                     height={300}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-orange-400/60 mix-blend-multiply"></div>
+                  <div className="absolute inset-0 bg-orange-400/60 mix-blend-soft-light"></div>
                 </div>
                 {/* Right: 2x2 grid of 4 images */}
                 <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-1 lg:gap-0 h-full">
@@ -52,7 +62,7 @@ export default function DonationPage() {
                       height={900}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-500/50 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-teal-500/50 mix-blend-soft-light"></div>
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
@@ -62,7 +72,7 @@ export default function DonationPage() {
                       height={900}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-green-600/40 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-green-600/40 mix-blend-soft-light"></div>
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
@@ -72,7 +82,7 @@ export default function DonationPage() {
                       height={200}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-blue-500/50 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-blue-500/50 mix-blend-soft-light"></div>
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
@@ -82,7 +92,7 @@ export default function DonationPage() {
                       height={200}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-amber-500/60 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-amber-500/60 mix-blend-soft-light"></div>
                   </div>
                 </div>
               </div>
@@ -99,7 +109,7 @@ export default function DonationPage() {
                       height={200}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-600/50 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-teal-600/50 mix-blend-soft-light"></div>
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
@@ -109,7 +119,7 @@ export default function DonationPage() {
                       height={200}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-orange-400/70 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-orange-400/70 mix-blend-soft-light"></div>
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
@@ -119,7 +129,7 @@ export default function DonationPage() {
                       height={200}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-green-500/60 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-green-500/60 mix-blend-soft-light"></div>
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
@@ -129,7 +139,7 @@ export default function DonationPage() {
                       height={200}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-cyan-600/50 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-cyan-600/50 mix-blend-soft-light"></div>
                   </div>
                 </div>
                 {/* Right: Large image */}
@@ -141,7 +151,7 @@ export default function DonationPage() {
                     height={300}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-blue-400/60 mix-blend-multiply"></div>
+                  <div className="absolute inset-0 bg-blue-400/60 mix-blend-soft-light"></div>
                 </div>
               </div>
 
@@ -156,7 +166,7 @@ export default function DonationPage() {
                     height={300}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-orange-500/50 mix-blend-multiply"></div>
+                  <div className="absolute inset-0 bg-orange-500/50 mix-blend-soft-light"></div>
                 </div>
                 {/* Right: 2x2 grid of 4 images */}
                 <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-1 lg:gap-0 h-full">
@@ -168,7 +178,7 @@ export default function DonationPage() {
                       height={200}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-orange-600/40 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-orange-600/40 mix-blend-soft-light"></div>
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
@@ -178,7 +188,7 @@ export default function DonationPage() {
                       height={200}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-pink-400/60 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-pink-400/60 mix-blend-soft-light"></div>
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
@@ -188,7 +198,7 @@ export default function DonationPage() {
                       height={200}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-green-600/50 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-green-600/50 mix-blend-soft-light"></div>
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
@@ -198,7 +208,7 @@ export default function DonationPage() {
                       height={200}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-500/60 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-teal-500/60 mix-blend-soft-light"></div>
                   </div>
                 </div>
               </div>
@@ -215,7 +225,7 @@ export default function DonationPage() {
                       height={200}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-orange-600/50 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-orange-600/50 mix-blend-soft-light"></div>
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
@@ -225,7 +235,7 @@ export default function DonationPage() {
                       height={200}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-pink-500/60 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-pink-500/60 mix-blend-soft-light"></div>
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
@@ -235,7 +245,7 @@ export default function DonationPage() {
                       height={200}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-green-500/40 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-green-500/40 mix-blend-soft-light"></div>
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
@@ -245,7 +255,7 @@ export default function DonationPage() {
                       height={200}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-cyan-500/50 mix-blend-multiply"></div>
+                    <div className="absolute inset-0 bg-cyan-500/50 mix-blend-soft-light"></div>
                   </div>
                 </div>
                 {/* Right: Large image */}
@@ -257,16 +267,17 @@ export default function DonationPage() {
                     height={300}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-blue-600/60 mix-blend-multiply"></div>
+                  <div className="absolute inset-0 bg-blue-600/60 mix-blend-soft-light"></div>
                 </div>
               </div>
+             
             </div>
           </div>
         </div>
 
         {/* Right Column - Donation Form (Scrollable) */}
-        <div className="w-full lg:w-1/2 h-auto lg:h-full overflow-y-auto p-3 lg:p-6">
-          <div className="space-y-6 flex flex-col items-center justify-center min-h-full">
+        <div className="w-full lg:w-1/2 h-auto lg:h-full lg:overflow-y-auto lg:overflow-x-hidden p-3 lg:py-24 ">
+          <div className="space-y-6 flex flex-col items-center justify-start lg:justify-center lg:min-h-full py-4 lg:py-0">
             <div className="text-center lg:text-left">
               <h1 className="text-xl lg:text-2xl font-bold mb-2">Become a Part of the Sukrutha Kerala Initiative</h1>
               <p className="text-muted-foreground text-sm lg:text-base">
@@ -279,13 +290,13 @@ export default function DonationPage() {
               {/* Full Name */}
               <div>
                 <label className="text-sm font-medium mb-1 block">Full Name</label>
-                <Input placeholder="Edwin Emmanuel Roy" className="bg-gray-50" />
+                <Input placeholder="Enter your full name" className="bg-gray-50" />
               </div>
 
               {/* Email ID */}
               <div>
                 <label className="text-sm font-medium mb-1 block">Email ID</label>
-                <Input type="email" placeholder="emmanuelroy82@gmail.com" className="bg-gray-50 active:border-blue-500" />
+                <Input type="email" placeholder="Enter your email ID" className="bg-gray-50 active:border-blue-500" />
               </div>
 
               {/* Contact Number */}
@@ -388,14 +399,26 @@ export default function DonationPage() {
               </div>
 
               {/* Terms & Conditions Checkbox */}
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="terms"
-                  className="data-[state=checked]:bg-teal-600 data-[state=checked]:border-teal-600"
-                />
-                <label htmlFor="terms" className="text-sm">
-                  Confirming Terms & Conditions
-                </label>
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="terms"
+                    checked={termsAccepted}
+                    onCheckedChange={(checked) => {
+                      setTermsAccepted(checked as boolean)
+                      if (checked) setShowTermsError(false)
+                    }}
+                    className="data-[state=checked]:bg-teal-600 data-[state=checked]:border-teal-600"
+                  />
+                  <label htmlFor="terms" className="text-sm">
+                    Confirming Terms & Conditions
+                  </label>
+                </div>
+                {showTermsError && (
+                  <p className="text-red-500 text-sm">
+                    Please accept the Terms & Conditions to proceed.
+                  </p>
+                )}
               </div>
 
               {/* Donate Button */}

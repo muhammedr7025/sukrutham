@@ -13,29 +13,12 @@ export default function ThankYouPage() {
   const targetAmount = 100
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center">
-              <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                <div className="w-3 h-3 bg-teal-600 rounded-full"></div>
-              </div>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">SUKRUTHA</h1>
-              <p className="text-xs text-gray-600">KERALA INITIATIVE</p>
-            </div>
-          </div>
-          <button className="text-gray-600 hover:text-gray-900 font-medium">Main Site</button>
-        </div>
-      </nav>
-
+    <div className="min-h-screen bg-gray-50 overflow-y-scroll">
       <div className="flex items-center justify-center min-h-[calc(100vh-80px)] p-6">
-        <div className="bg-white rounded-3xl shadow-lg p-12 max-w-2xl w-full mx-auto border border-gray-200">
-          <div className="flex justify-center mb-8">
+        <div className="bg-white rounded-3xl shadow-lg p-12 max-w-7xl w-full mx-auto border border-gray-200">
+          <div className="flex justify-center mb-1">
             <Image
-              src="/kerala-celebration.png"
+              src="/images/Diversity Team Illustration.png"
               alt="Community celebration"
               width={300}
               height={200}
