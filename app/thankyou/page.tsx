@@ -25,7 +25,7 @@ function ThankYouContent() {
         <div className="bg-white rounded-3xl shadow-lg p-12 max-w-7xl w-full mx-auto border border-gray-200">
           <div className="flex justify-center mb-1">
             <Image
-              src="/images/Diversity Team Illustration.png"
+              src="/images/Diversity Team Illustration.avif"
               alt="Community celebration"
               width={300}
               height={200}

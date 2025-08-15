@@ -216,7 +216,7 @@ export default function DonationPage() {
                 {/* Left: Large image */}
                 <div className="flex-1 rounded-xl overflow-hidden relative">
                   <Image
-                    src="/images/rectangle 16.png"
+                    src="/images/rectangle 16.avif"
                     alt="rectangle 6"
                     width={400}
                     height={300}
@@ -228,7 +228,7 @@ export default function DonationPage() {
                 <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-1 lg:gap-0 h-full">
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 17.png"
+                      src="/images/rectangle 17.avif"
                       alt="rectangle 12"
                       width={200}
                       height={200}
@@ -238,7 +238,7 @@ export default function DonationPage() {
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 18.png"
+                      src="/images/rectangle 18.avif"
                       alt="rectangle 13"
                       width={200}
                       height={200}
@@ -248,7 +248,7 @@ export default function DonationPage() {
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 19.png"
+                      src="/images/rectangle 19.avif"
                       alt="rectangle 14"
                       width={200}
                       height={200}
@@ -258,7 +258,7 @@ export default function DonationPage() {
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 20.png"
+                      src="/images/rectangle 20.avif"
                       alt="rectangle 15"
                       width={200}
                       height={200}
