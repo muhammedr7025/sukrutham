@@ -22,15 +22,15 @@ export default function DonationPage() {
   }
 
   return (
-    <div className="h-screen bg-background overflow-hidden">
+    <div className="min-h-screen lg:h-screen bg-background lg:overflow-hidden">
       {/* Main Content */}
-      <div className="h-full flex overflow-hidden px-16">
-        {/* Left Column - Image Grid (Fixed, no scroll) */}
-        <div className="w-1/2 p-6 overflow-hidden">
-          <div className="space-y-4 -mt-10">
+      <div className="h-full flex flex-col lg:flex-row overflow-hidden px-4 lg:px-16">
+        {/* Left Column - Image Grid (Fixed on desktop, scrollable on mobile) */}
+        <div className="w-full lg:w-1/2 p-3 lg:p-6 lg:overflow-hidden">
+          <div className="space-y-2 lg:space-y-4 -mt-5 lg:-mt-10">
             <div className="space-y-0">
               {/* Row 1: Large image LEFT + 4 small images RIGHT */}
-              <div className="flex h-48">
+              <div className="flex flex-col sm:flex-row gap-2 lg:gap-0 h-32 sm:h-48">
                 {/* Left: Large image */}
                 <div className="flex-1 rounded-xl overflow-hidden relative">
                   <Image
@@ -43,7 +43,7 @@ export default function DonationPage() {
                   <div className="absolute inset-0 bg-orange-400/60 mix-blend-multiply"></div>
                 </div>
                 {/* Right: 2x2 grid of 4 images */}
-                <div className="flex-1 grid grid-cols-2 grid-rows-2 h-full">
+                <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-1 lg:gap-0 h-full">
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
                       src="/images/rectangle 11.jpg"
@@ -88,9 +88,9 @@ export default function DonationPage() {
               </div>
 
               {/* Row 2: 4 small images LEFT + Large image RIGHT */}
-              <div className="flex h-48">
+              <div className="flex flex-col sm:flex-row gap-2 lg:gap-0 h-32 sm:h-48">
                 {/* Left: 2x2 grid of 4 images */}
-                <div className="flex-1 grid grid-cols-2 grid-rows-2 h-full">
+                <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-1 lg:gap-0 h-full">
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
                       src="/images/rectangle 11.jpg"
@@ -146,7 +146,7 @@ export default function DonationPage() {
               </div>
 
               {/* Row 3: Large image LEFT + 4 small images RIGHT */}
-              <div className="flex h-48">
+              <div className="flex flex-col sm:flex-row gap-2 lg:gap-0 h-32 sm:h-48">
                 {/* Left: Large image */}
                 <div className="flex-1 rounded-xl overflow-hidden relative">
                   <Image
@@ -159,7 +159,7 @@ export default function DonationPage() {
                   <div className="absolute inset-0 bg-orange-500/50 mix-blend-multiply"></div>
                 </div>
                 {/* Right: 2x2 grid of 4 images */}
-                <div className="flex-1 grid grid-cols-2 grid-rows-2 h-full">
+                <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-1 lg:gap-0 h-full">
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
                       src="/images/rectangle 12.jpg"
@@ -204,9 +204,9 @@ export default function DonationPage() {
               </div>
 
               {/* Row 4: 4 small images LEFT + Large image RIGHT */}
-              <div className="flex h-48">
+              <div className="flex flex-col sm:flex-row gap-2 lg:gap-0 h-32 sm:h-48">
                 {/* Left: 2x2 grid of 4 images */}
-                <div className="flex-1 grid grid-cols-2 grid-rows-2 h-full">
+                <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-1 lg:gap-0 h-full">
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
                       src="/images/rectangle 11.jpg"
@@ -265,17 +265,17 @@ export default function DonationPage() {
         </div>
 
         {/* Right Column - Donation Form (Scrollable) */}
-        <div className="w-1/2 h-full overflow-y-auto p-6">
+        <div className="w-full lg:w-1/2 h-auto lg:h-full overflow-y-auto p-3 lg:p-6">
           <div className="space-y-6 flex flex-col items-center justify-center min-h-full">
-            <div className="">
-              <h1 className="text-2xl font-bold mb-2">Become a Part of the Sukrutha Kerala Initiative</h1>
-              <p className="text-muted-foreground">
+            <div className="text-center lg:text-left">
+              <h1 className="text-xl lg:text-2xl font-bold mb-2">Become a Part of the Sukrutha Kerala Initiative</h1>
+              <p className="text-muted-foreground text-sm lg:text-base">
                 Your contribution will directly fuel our efforts to build a better future for Kerala. Please fill out
                 this form to complete your donation and make an immediate impact.
               </p>
             </div>
 
-            <form className="space-y-4 w-3/4" onSubmit={handleSubmit}>
+            <form className="space-y-4 w-full lg:w-3/4" onSubmit={handleSubmit}>
               {/* Full Name */}
               <div>
                 <label className="text-sm font-medium mb-1 block">Full Name</label>
