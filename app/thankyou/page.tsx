@@ -3,12 +3,19 @@
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import Image from "next/image"
+import { useSearchParams } from "next/navigation"
+import { Suspense } from "react"
 
-export default function ThankYouPage() {
-  // In a real app, these would come from URL params or API
-  const donorName = "Edwin Emmanuel Roy"
-  const donationAmount = "₹5000"
-  const transactionId = "REF-123456789"
+function ThankYouContent() {
+  const searchParams = useSearchParams()
+  
+  // Get data from URL parameters
+  const donorName = searchParams.get('name') || "Anonymous Donor"
+  const donationAmount = searchParams.get('amount') ? `₹${searchParams.get('amount')}` : "₹1000"
+  const donorEmail = searchParams.get('email') || "donor@example.com"
+  const transactionId = searchParams.get('transactionId') || "REF-123456789"
+  const wantsCertificate = searchParams.get('wantsCertificate') === 'true'
+  
   const collectedAmount = 25
   const targetAmount = 100
 
@@ -73,25 +80,37 @@ export default function ThankYouPage() {
             <Button className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-medium">
               Ask Others To Donate
             </Button>
-            <Button className="flex-1 bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-lg font-medium">
-              Download Certificate
-            </Button>
+            {wantsCertificate && (
+              <Button className="flex-1 bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-lg font-medium">
+                Download Certificate
+              </Button>
+            )}
           </div>
 
           <div className="text-center text-sm text-gray-600 space-y-2">
             <p>
-              An instant success email has been shared with you at mayavalliemailid.com with
+              An instant success email has been shared with you at {donorEmail} with
               <br />
-              the reference number REF-123456789
+              the reference number {transactionId}
             </p>
-            <p>
-              80(G) Certificate: Your request for an 80(G) certificate has been received. You will
-              <br />
-              be contacted shortly for the necessary details.
-            </p>
+            {wantsCertificate && (
+              <p>
+                80(G) Certificate: Your request for an 80(G) certificate has been received. You will
+                <br />
+                be contacted shortly for the necessary details.
+              </p>
+            )}
           </div>
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ThankYouPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ThankYouContent />
+    </Suspense>
   )
 }

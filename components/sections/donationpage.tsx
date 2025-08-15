@@ -9,26 +9,82 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 
 export default function DonationPage() {
+  const router = useRouter()
   const [wantsCertificate, setWantsCertificate] = useState(false)
   const [amount, setAmount] = useState("1000")
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [showTermsError, setShowTermsError] = useState(false)
-  const router = useRouter()
+  
+  // Form field states
+  const [fullName, setFullName] = useState("")
+  const [email, setEmail] = useState("")
+  const [contact, setContact] = useState("")
+  const [pan, setPan] = useState("")
+  const [address, setAddress] = useState("")
+  const [city, setCity] = useState("")
+  const [state, setState] = useState("")
+  const [country, setCountry] = useState("")
+  const [pinCode, setPinCode] = useState("")
+  
+  // Form validation states
+  const [errors, setErrors] = useState<{[key: string]: string}>({})
+  const [showErrors, setShowErrors] = useState(false)
 
   const handleAmountSelect = (value: string) => {
     setAmount(value)
   }
 
+  const validateForm = () => {
+    const newErrors: {[key: string]: string} = {}
+    
+    // Required fields validation
+    if (!fullName.trim()) newErrors.fullName = "Full name is required"
+    if (!email.trim()) newErrors.email = "Email is required"
+    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = "Please enter a valid email"
+    if (!contact.trim()) newErrors.contact = "Contact number is required"
+    else if (!/^\d{10}$/.test(contact.replace(/\D/g, ''))) newErrors.contact = "Please enter a valid 10-digit contact number"
+    if (!amount || parseFloat(amount) <= 0) newErrors.amount = "Please enter a valid donation amount"
+    
+    // 80G Certificate conditional validation
+    if (wantsCertificate) {
+      if (!pan.trim()) newErrors.pan = "PAN number is required for 80G certificate"
+      else if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan.toUpperCase())) newErrors.pan = "Please enter a valid PAN number"
+      if (!address.trim()) newErrors.address = "Full address is required for 80G certificate"
+      if (!city.trim()) newErrors.city = "City is required for 80G certificate"
+      if (!state.trim()) newErrors.state = "State is required for 80G certificate"
+      if (!country.trim()) newErrors.country = "Country is required for 80G certificate"
+      if (!pinCode.trim()) newErrors.pinCode = "PIN code is required for 80G certificate"
+      else if (!/^\d{6}$/.test(pinCode)) newErrors.pinCode = "Please enter a valid 6-digit PIN code"
+    }
+    
+    // Terms validation
+    if (!termsAccepted) newErrors.terms = "Please accept the Terms & Conditions to proceed"
+    
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    setShowErrors(true)
     
-    if (!termsAccepted) {
-      setShowTermsError(true)
+    if (!validateForm()) {
+      if (!termsAccepted) setShowTermsError(true)
       return
     }
     
     setShowTermsError(false)
-    router.push("/thankyou")
+    
+    // Create URL parameters to pass data to thank you page
+    const params = new URLSearchParams({
+      name: fullName,
+      email: email,
+      amount: amount,
+      wantsCertificate: wantsCertificate.toString(),
+      transactionId: `REF-${Date.now()}` // Generate a simple transaction ID
+    })
+    
+    router.push(`/thankyou?${params.toString()}`)
   }
 
   return (
@@ -56,7 +112,7 @@ export default function DonationPage() {
                 <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-1 lg:gap-0 h-full">
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 11.jpg"
+                      src="/images/rectangle 7.jpg"
                       alt="rectangle 11"
                       width={900}
                       height={900}
@@ -66,7 +122,7 @@ export default function DonationPage() {
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 12.jpg"
+                      src="/images/rectangle 8.jpg"
                       alt="rectangle 12"
                       width={900}
                       height={900}
@@ -76,7 +132,7 @@ export default function DonationPage() {
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 13.jpg"
+                      src="/images/rectangle 9.jpg"
                       alt="rectangle 13"
                       width={200}
                       height={200}
@@ -86,7 +142,7 @@ export default function DonationPage() {
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 14.jpg"
+                      src="/images/rectangle 10.jpg"
                       alt="rectangle 14"
                       width={200}
                       height={200}
@@ -109,7 +165,7 @@ export default function DonationPage() {
                       height={200}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-teal-600/50 mix-blend-soft-light"></div>
+                    <div className="absolute inset-0 bg-primary/50 mix-blend-soft-light"></div>
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
@@ -160,7 +216,7 @@ export default function DonationPage() {
                 {/* Left: Large image */}
                 <div className="flex-1 rounded-xl overflow-hidden relative">
                   <Image
-                    src="/images/rectangle 6.jpg"
+                    src="/images/rectangle 16.png"
                     alt="rectangle 6"
                     width={400}
                     height={300}
@@ -172,7 +228,7 @@ export default function DonationPage() {
                 <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-1 lg:gap-0 h-full">
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 12.jpg"
+                      src="/images/rectangle 17.png"
                       alt="rectangle 12"
                       width={200}
                       height={200}
@@ -182,7 +238,7 @@ export default function DonationPage() {
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 13.jpg"
+                      src="/images/rectangle 18.png"
                       alt="rectangle 13"
                       width={200}
                       height={200}
@@ -192,7 +248,7 @@ export default function DonationPage() {
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 14.jpg"
+                      src="/images/rectangle 19.png"
                       alt="rectangle 14"
                       width={200}
                       height={200}
@@ -202,7 +258,7 @@ export default function DonationPage() {
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 15.jpg"
+                      src="/images/rectangle 20.png"
                       alt="rectangle 15"
                       width={200}
                       height={200}
@@ -276,7 +332,7 @@ export default function DonationPage() {
         </div>
 
         {/* Right Column - Donation Form (Scrollable) */}
-        <div className="w-full lg:w-1/2 h-auto lg:h-full lg:overflow-y-auto lg:overflow-x-hidden p-3 lg:py-24 ">
+        <div className="w-full lg:w-1/2 h-auto lg:h-full lg:overflow-y-auto lg:overflow-x-hidden p-3 lg:py-24 lg:px-12 ">
           <div className="space-y-6 flex flex-col items-center justify-start lg:justify-center lg:min-h-full py-4 lg:py-0">
             <div className="text-center lg:text-left">
               <h1 className="text-xl lg:text-2xl font-bold mb-2">Become a Part of the Sukrutha Kerala Initiative</h1>
@@ -289,25 +345,59 @@ export default function DonationPage() {
             <form className="space-y-4 w-full lg:w-3/4" onSubmit={handleSubmit}>
               {/* Full Name */}
               <div>
-                <label className="text-sm font-medium mb-1 block">Full Name</label>
-                <Input placeholder="Enter your full name" className="bg-gray-50" />
+                <label className="text-sm font-medium mb-1 block">
+                  Full Name <span className="text-red-500">*</span>
+                </label>
+                <Input 
+                  placeholder="Enter your full name" 
+                  className="bg-gray-50" 
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                />
+                {showErrors && errors.fullName && (
+                  <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
+                )}
               </div>
 
               {/* Email ID */}
               <div>
-                <label className="text-sm font-medium mb-1 block">Email ID</label>
-                <Input type="email" placeholder="Enter your email ID" className="bg-gray-50 active:border-blue-500" />
+                <label className="text-sm font-medium mb-1 block">
+                  Email ID <span className="text-red-500">*</span>
+                </label>
+                <Input 
+                  type="email" 
+                  placeholder="Enter your email ID" 
+                  className="bg-gray-50 active:border-blue-500" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {showErrors && errors.email && (
+                  <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                )}
               </div>
 
               {/* Contact Number */}
               <div>
-                <label className="text-sm font-medium mb-1 block">Contact Number</label>
-                <Input type="tel" placeholder="Enter your contact number" className="bg-gray-50" />
+                <label className="text-sm font-medium mb-1 block">
+                  Contact Number <span className="text-red-500">*</span>
+                </label>
+                <Input 
+                  type="tel" 
+                  placeholder="Enter your contact number" 
+                  className="bg-gray-50" 
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                />
+                {showErrors && errors.contact && (
+                  <p className="text-red-500 text-sm mt-1">{errors.contact}</p>
+                )}
               </div>
 
               {/* Enter Amount */}
               <div>
-                <label className="text-sm font-medium mb-1 block">Enter Amount (in ₹)</label>
+                <label className="text-sm font-medium mb-1 block">
+                  Enter Amount (in ₹) <span className="text-red-500">*</span>
+                </label>
                 <Input
                   type="number"
                   placeholder="Enter donation amount"
@@ -315,6 +405,9 @@ export default function DonationPage() {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                 />
+                {showErrors && errors.amount && (
+                  <p className="text-red-500 text-sm mt-1">{errors.amount}</p>
+                )}
                 <div className="flex gap-2 mt-2">
                   <Button
                     type="button"
@@ -343,7 +436,7 @@ export default function DonationPage() {
                   id="certificate"
                   checked={wantsCertificate}
                   onCheckedChange={(checked) => setWantsCertificate(checked as boolean)}
-                  className="data-[state=checked]:bg-teal-600 data-[state=checked]:border-teal-600"
+                  className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                 />
                 <label htmlFor="certificate" className="text-sm">
                   I would like to receive 80(G) Certificate
@@ -362,38 +455,98 @@ export default function DonationPage() {
                 >
                   {/* PAN Number */}
                   <div>
-                    <label className="text-sm font-medium mb-1 block">PAN number</label>
-                    <Input placeholder="Enter PAN number" className="bg-gray-50" />
+                    <label className="text-sm font-medium mb-1 block">
+                      PAN number <span className="text-red-500">*</span>
+                    </label>
+                    <Input 
+                      placeholder="Enter PAN number" 
+                      className="bg-gray-50" 
+                      value={pan}
+                      onChange={(e) => setPan(e.target.value)}
+                    />
+                    {showErrors && errors.pan && (
+                      <p className="text-red-500 text-sm mt-1">{errors.pan}</p>
+                    )}
                   </div>
 
                   {/* Full Address */}
                   <div>
-                    <label className="text-sm font-medium mb-1 block">Full Address</label>
-                    <Textarea placeholder="Enter your full address" className="bg-gray-50 min-h-[80px]" />
+                    <label className="text-sm font-medium mb-1 block">
+                      Full Address <span className="text-red-500">*</span>
+                    </label>
+                    <Textarea 
+                      placeholder="Enter your full address" 
+                      className="bg-gray-50 min-h-[80px]" 
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                    />
+                    {showErrors && errors.address && (
+                      <p className="text-red-500 text-sm mt-1">{errors.address}</p>
+                    )}
                   </div>
 
                   {/* City */}
                   <div>
-                    <label className="text-sm font-medium mb-1 block">City</label>
-                    <Input placeholder="Enter city" className="bg-gray-50" />
+                    <label className="text-sm font-medium mb-1 block">
+                      City <span className="text-red-500">*</span>
+                    </label>
+                    <Input 
+                      placeholder="Enter city" 
+                      className="bg-gray-50" 
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                    />
+                    {showErrors && errors.city && (
+                      <p className="text-red-500 text-sm mt-1">{errors.city}</p>
+                    )}
                   </div>
 
                   {/* State */}
                   <div>
-                    <label className="text-sm font-medium mb-1 block">State</label>
-                    <Input placeholder="Enter state" className="bg-gray-50" />
+                    <label className="text-sm font-medium mb-1 block">
+                      State <span className="text-red-500">*</span>
+                    </label>
+                    <Input 
+                      placeholder="Enter state" 
+                      className="bg-gray-50" 
+                      value={state}
+                      onChange={(e) => setState(e.target.value)}
+                    />
+                    {showErrors && errors.state && (
+                      <p className="text-red-500 text-sm mt-1">{errors.state}</p>
+                    )}
                   </div>
 
                   {/* Country */}
                   <div>
-                    <label className="text-sm font-medium mb-1 block">Country</label>
-                    <Input placeholder="Enter country" className="bg-gray-50" />
+                    <label className="text-sm font-medium mb-1 block">
+                      Country <span className="text-red-500">*</span>
+                    </label>
+                    <Input 
+                      placeholder="Enter country" 
+                      className="bg-gray-50" 
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                    />
+                    {showErrors && errors.country && (
+                      <p className="text-red-500 text-sm mt-1">{errors.country}</p>
+                    )}
                   </div>
 
                   {/* PIN Code */}
                   <div>
-                    <label className="text-sm font-medium mb-1 block">PIN Code</label>
-                    <Input placeholder="Enter PIN code" className="bg-gray-50" />
+                    <label className="text-sm font-medium mb-1 block">
+                      PIN Code <span className="text-red-500">*</span>
+                    </label>
+                    <Input 
+                      placeholder="Enter PIN code" 
+                      className="bg-gray-50" 
+                      value={pinCode}
+                      onChange={(e) => setPinCode(e.target.value)}
+                    />
+                    {showErrors && errors.pinCode && (
+                      <p className="text-red-500 text-sm mt-1">{errors.pinCode}</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -408,15 +561,15 @@ export default function DonationPage() {
                       setTermsAccepted(checked as boolean)
                       if (checked) setShowTermsError(false)
                     }}
-                    className="data-[state=checked]:bg-teal-600 data-[state=checked]:border-teal-600"
+                    className="data-[state=checked]:bg-primary data-[state=checked]:border-teal-600"
                   />
                   <label htmlFor="terms" className="text-sm">
-                    Confirming Terms & Conditions
+                    Confirming Terms & Conditions <span className="text-red-500">*</span>
                   </label>
                 </div>
-                {showTermsError && (
+                {(showTermsError || (showErrors && errors.terms)) && (
                   <p className="text-red-500 text-sm">
-                    Please accept the Terms & Conditions to proceed.
+                    {errors.terms || "Please accept the Terms & Conditions to proceed."}
                   </p>
                 )}
               </div>
@@ -424,7 +577,7 @@ export default function DonationPage() {
               {/* Donate Button */}
               <Button
                 type="submit"
-                className="w-full bg-teal-600 hover:bg-teal-700 text-white py-3 text-base font-medium"
+                className="w-full bg-primary hover:bg-teal-700 text-white py-3 text-base font-medium"
               >
                 Donate Now
               </Button>
