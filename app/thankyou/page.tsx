@@ -20,9 +20,9 @@ function ThankYouContent() {
   const targetAmount = 100
 
   return (
-    <div className="min-h-screen bg-gray-50 overflow-y-scroll">
-      <div className="flex items-center justify-center min-h-[calc(100vh-80px)] p-6">
-        <div className="bg-white rounded-3xl shadow-lg p-12 max-w-7xl w-full mx-auto border border-gray-200">
+    <div className=" bg-gray-50 ">
+      <div className="flex items-center justify-center min-h-[calc(100vh-80px)] p-6 overflow-scroll ">
+        <div className="bg-white rounded-3xl shadow-lg p-12 max-w-7xl w-full mx-auto border border-gray-200 overflow-y-scroll">
           <div className="flex justify-center mb-1">
             <Image
               src="/images/Diversity Team Illustration.avif"

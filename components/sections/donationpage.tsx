@@ -100,7 +100,7 @@ export default function DonationPage() {
                 {/* Left: Large image */}
                 <div className="flex-1 rounded-xl overflow-hidden relative">
                   <Image
-                    src="/images/rectangle 6.jpg"
+                    src="/images/rectangle 6.avif"
                     alt="rectangle 6"
                     width={400}
                     height={300}
@@ -112,7 +112,7 @@ export default function DonationPage() {
                 <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-1 lg:gap-0 h-full">
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 7.jpg"
+                      src="/images/rectangle 7.avif"
                       alt="rectangle 11"
                       width={900}
                       height={900}
@@ -122,7 +122,7 @@ export default function DonationPage() {
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 8.jpg"
+                      src="/images/rectangle 8.avif"
                       alt="rectangle 12"
                       width={900}
                       height={900}
@@ -132,7 +132,7 @@ export default function DonationPage() {
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 9.jpg"
+                      src="/images/rectangle 9.avif"
                       alt="rectangle 13"
                       width={200}
                       height={200}
@@ -142,7 +142,7 @@ export default function DonationPage() {
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 10.jpg"
+                      src="/images/rectangle 10.avif"
                       alt="rectangle 14"
                       width={200}
                       height={200}
@@ -159,7 +159,7 @@ export default function DonationPage() {
                 <div className="flex-1 grid grid-cols-2 grid-rows-2 gap-1 lg:gap-0 h-full">
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 11.jpg"
+                      src="/images/rectangle 11.avif"
                       alt="rectangle 11"
                       width={200}
                       height={200}
@@ -169,7 +169,7 @@ export default function DonationPage() {
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 12.jpg"
+                      src="/images/rectangle 12.avif"
                       alt="rectangle 12"
                       width={200}
                       height={200}
@@ -179,7 +179,7 @@ export default function DonationPage() {
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 13.jpg"
+                      src="/images/rectangle 13.avif"
                       alt="rectangle 13"
                       width={200}
                       height={200}
@@ -189,7 +189,7 @@ export default function DonationPage() {
                   </div>
                   <div className="rounded-xl overflow-hidden relative">
                     <Image
-                      src="/images/rectangle 14.jpg"
+                      src="/images/rectangle 14.avif"
                       alt="rectangle 14"
                       width={200}
                       height={200}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/layout/navbar";
 
 
 
@@ -13,21 +14,8 @@ const poppins = Poppins({
 
 
 export const metadata: Metadata = {
-  title: "Sukrutha Kerala Initiative - Make a Difference Today",
-  description: "Join the Sukrutha Kerala Initiative and contribute to building a better future for Kerala. Your donation directly fuels our efforts to transform communities and create lasting positive change.",
-  keywords: "Kerala, donation, charity, community development, social impact, Sukrutha",
-  authors: [{ name: "Sukrutha Kerala Initiative" }],
-  openGraph: {
-    title: "Sukrutha Kerala Initiative - Make a Difference Today",
-    description: "Contribute to building a better future for Kerala. Your donation creates lasting positive change in communities.",
-    type: "website",
-    locale: "en_US",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Sukrutha Kerala Initiative - Make a Difference Today",
-    description: "Contribute to building a better future for Kerala. Your donation creates lasting positive change in communities.",
-  },
+  title: "Sukrutha - Transforming Kerala",
+  description: "Join us in our mission to transform Kerala through community-driven initiatives and sustainable development",
 };
 
 export default function RootLayout({
@@ -36,10 +24,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="">
+    <html lang="en" className="lg:h-full">
       <body
-        className={`${poppins.variable} antialiased `}
+        className={`${poppins.variable} ${poppins.variable} antialiased`}
       >
+        <Navbar/>
         {children}
       </body>
     </html>
