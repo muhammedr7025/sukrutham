@@ -1,39 +1,46 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import Image from "next/image"
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import Image from "next/image";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function DonationPage() {
-  const router = useRouter()
-  const [wantsCertificate, setWantsCertificate] = useState(false)
-  const [amount, setAmount] = useState("1000")
-  const [showCustomAmount, setShowCustomAmount] = useState(false)
-  const [selectedAmountPill, setSelectedAmountPill] = useState("1000")
-  const [customAmountError, setCustomAmountError] = useState("")
-  const [termsAccepted, setTermsAccepted] = useState(false)
-  const [showTermsError, setShowTermsError] = useState(false)
-  
+  const router = useRouter();
+  const [wantsCertificate, setWantsCertificate] = useState(false);
+  const [amount, setAmount] = useState("1000");
+  const [showCustomAmount, setShowCustomAmount] = useState(false);
+  const [selectedAmountPill, setSelectedAmountPill] = useState("1000");
+  const [customAmountError, setCustomAmountError] = useState("");
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [showTermsError, setShowTermsError] = useState(false);
+
   // Form field states
-  const [fullName, setFullName] = useState("")
-  const [email, setEmail] = useState("")
-  const [countryCode, setCountryCode] = useState("+91") // Default to India
-  const [contact, setContact] = useState("")
-  const [pan, setPan] = useState("")
-  const [address, setAddress] = useState("")
-  const [city, setCity] = useState("")
-  const [state, setState] = useState("")
-  const [country, setCountry] = useState("")
-  const [pinCode, setPinCode] = useState("")
-  
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [countryCode, setCountryCode] = useState("+91"); // Default to India
+  const [contact, setContact] = useState("");
+  const [pan, setPan] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [country, setCountry] = useState("");
+  const [pinCode, setPinCode] = useState("");
+
   // Form validation states
-  const [errors, setErrors] = useState<{[key: string]: string}>({})
-  const [showErrors, setShowErrors] = useState(false)
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [showErrors, setShowErrors] = useState(false);
 
   // Country codes for the dropdown
   const countryCodes = [
@@ -57,100 +64,130 @@ export default function DonationPage() {
     { code: "+82", country: "South Korea", flag: "🇰🇷" },
     { code: "+60", country: "Malaysia", flag: "🇲🇾" },
     { code: "+66", country: "Thailand", flag: "🇹🇭" },
-  ]
+  ];
 
   const handleAmountSelect = (value: string) => {
-    setAmount(value)
-    setSelectedAmountPill(value)
-    setShowCustomAmount(false)
-    setCustomAmountError("") // Clear custom amount error when selecting predefined amount
-  }
+    setAmount(value);
+    setSelectedAmountPill(value);
+    setShowCustomAmount(false);
+    setCustomAmountError(""); // Clear custom amount error when selecting predefined amount
+  };
 
   const handleOtherAmountClick = () => {
-    setSelectedAmountPill("other")
-    setShowCustomAmount(true)
-    setAmount("") // Clear the amount when switching to custom
-  }
+    setSelectedAmountPill("other");
+    setShowCustomAmount(true);
+    setAmount(""); // Clear the amount when switching to custom
+  };
 
   const handleCustomAmountChange = (value: string) => {
-    setAmount(value)
-    
+    setAmount(value);
+
     // Real-time validation for custom amount
     if (value && parseFloat(value) > 0 && parseFloat(value) < 1000) {
-      setCustomAmountError("Minimum donation amount is ₹1,000")
+      setCustomAmountError("Minimum donation amount is ₹1,000");
     } else {
-      setCustomAmountError("")
+      setCustomAmountError("");
     }
-    
+
     // Clear amount error if user is typing and meets minimum requirement
     if (value && parseFloat(value) >= 1000 && errors.amount) {
-      const newErrors = { ...errors }
-      delete newErrors.amount
-      setErrors(newErrors)
+      const newErrors = { ...errors };
+      delete newErrors.amount;
+      setErrors(newErrors);
     }
-  }
+  };
 
   const validateForm = () => {
-    const newErrors: {[key: string]: string} = {}
-    
+    const newErrors: { [key: string]: string } = {};
+
     // Required fields validation
-    if (!fullName.trim()) newErrors.fullName = "Full name is required"
-    if (!email.trim()) newErrors.email = "Email is required"
-    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = "Please enter a valid email"
-    if (!contact.trim()) newErrors.contact = "Contact number is required"
+    if (!fullName.trim()) newErrors.fullName = "Full name is required";
+    if (!email.trim()) newErrors.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(email))
+      newErrors.email = "Please enter a valid email";
+    if (!contact.trim()) newErrors.contact = "Contact number is required";
     else {
       // Remove spaces and hyphens for validation
-      const cleanContact = contact.replace(/[\s\-]/g, '')
+      const cleanContact = contact.replace(/[\s\-]/g, "");
       // Basic validation - should be digits and reasonable length
       if (!/^\d{7,15}$/.test(cleanContact)) {
-        newErrors.contact = "Please enter a valid contact number (7-15 digits)"
+        newErrors.contact = "Please enter a valid contact number (7-15 digits)";
       }
     }
-    if (!amount || parseFloat(amount) <= 0) newErrors.amount = "Please enter a valid donation amount"
-    else if (parseFloat(amount) < 1000) newErrors.amount = "Minimum donation amount is ₹1,000"
-    
+    if (!amount || parseFloat(amount) <= 0)
+      newErrors.amount = "Please enter a valid donation amount";
+    else if (parseFloat(amount) < 1000)
+      newErrors.amount = "Minimum donation amount is ₹1,000";
+
     // 80G Certificate conditional validation
     if (wantsCertificate) {
-      if (!pan.trim()) newErrors.pan = "PAN number is required for 80G certificate"
-      else if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan.toUpperCase())) newErrors.pan = "Please enter a valid PAN number"
-      if (!address.trim()) newErrors.address = "Full address is required for 80G certificate"
-      if (!city.trim()) newErrors.city = "City is required for 80G certificate"
-      if (!state.trim()) newErrors.state = "State is required for 80G certificate"
-      if (!country.trim()) newErrors.country = "Country is required for 80G certificate"
-      if (!pinCode.trim()) newErrors.pinCode = "PIN code is required for 80G certificate"
-      else if (!/^\d{6}$/.test(pinCode)) newErrors.pinCode = "Please enter a valid 6-digit PIN code"
+      if (!pan.trim())
+        newErrors.pan = "PAN number is required for 80G certificate";
+      else if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan.toUpperCase()))
+        newErrors.pan = "Please enter a valid PAN number";
+      if (!address.trim())
+        newErrors.address = "Full address is required for 80G certificate";
+      if (!city.trim()) newErrors.city = "City is required for 80G certificate";
+      if (!state.trim())
+        newErrors.state = "State is required for 80G certificate";
+      if (!country.trim())
+        newErrors.country = "Country is required for 80G certificate";
+      if (!pinCode.trim())
+        newErrors.pinCode = "PIN code is required for 80G certificate";
+      else if (!/^\d{6}$/.test(pinCode))
+        newErrors.pinCode = "Please enter a valid 6-digit PIN code";
     }
-    
+
     // Terms validation
-    if (!termsAccepted) newErrors.terms = "Please accept the Terms & Conditions to proceed"
-    
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    if (!termsAccepted)
+      newErrors.terms = "Please accept the Terms & Conditions to proceed";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setShowErrors(true)
-    
+    e.preventDefault();
+    setShowErrors(true);
+
     if (!validateForm()) {
-      if (!termsAccepted) setShowTermsError(true)
-      return
+      if (!termsAccepted) setShowTermsError(true);
+      return;
     }
-    
-    setShowTermsError(false)
-    
-    // Create URL parameters to pass data to thank you page
-    const params = new URLSearchParams({
-      name: fullName,
-      email: email,
-      contact: `${countryCode} ${contact}`,
-      amount: amount,
-      wantsCertificate: wantsCertificate.toString(),
-      transactionId: `REF-${Date.now()}` // Generate a simple transaction ID
-    })
-    
-    router.push(`/thankyou?${params.toString()}`)
-  }
+
+    setShowTermsError(false);
+
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/api/donation/donate`, {
+        full_name: fullName,
+        email: email,
+        contact_number: `${countryCode} ${contact}`,
+        amount: amount,
+        need_g80_certificate: wantsCertificate,
+        confirmed_terms: termsAccepted,
+        form_g80: wantsCertificate
+          ? {
+              pan_number: pan,
+              full_address: address,
+              city: city,
+              state: state,
+              country: country,
+              pin_code: pinCode,
+            }
+          : null,
+      })
+      .then((response) => {
+        if (response.data && response.data.payment_url) {
+          const redirect_url = response.data.payment_url;
+          window.open(redirect_url);
+        } else {
+          alert("Payment failed");
+        }
+      })
+      .catch((error) => {
+        alert("An error occurred while processing your request");
+      });
+  };
 
   return (
     <div className="min-h-screen lg:h-screen bg-background overflow-hidden ">
@@ -391,7 +428,6 @@ export default function DonationPage() {
                   <div className="absolute inset-0 bg-blue-600/60 mix-blend-soft-light"></div>
                 </div>
               </div>
-             
             </div>
           </div>
         </div>
@@ -400,10 +436,13 @@ export default function DonationPage() {
         <div className="w-full lg:w-1/2 h-auto lg:h-full lg:overflow-y-auto lg:overflow-x-hidden p-3 lg:py-24 lg:px-12 ">
           <div className="space-y-6 flex flex-col items-center justify-start lg:justify-center lg:min-h-full py-4 lg:py-0">
             <div className="text-center lg:text-left">
-              <h1 className="text-xl lg:text-2xl font-bold mb-2">Become a Part of the Sukrutha Kerala Initiative</h1>
+              <h1 className="text-xl lg:text-2xl font-bold mb-2">
+                Become a Part of the Sukrutha Kerala Initiative
+              </h1>
               <p className="text-muted-foreground text-sm lg:text-base">
-                Your contribution will directly fuel our efforts to build a better future for Kerala. Please fill out
-                this form to complete your donation and make an immediate impact.
+                Your contribution will directly fuel our efforts to build a
+                better future for Kerala. Please fill out this form to complete
+                your donation and make an immediate impact.
               </p>
             </div>
 
@@ -413,9 +452,9 @@ export default function DonationPage() {
                 <label className="text-sm font-medium mb-1 block">
                   Full Name <span className="text-red-500">*</span>
                 </label>
-                <Input 
-                  placeholder="Enter your full name" 
-                  className="bg-gray-50" 
+                <Input
+                  placeholder="Enter your full name"
+                  className="bg-gray-50"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                 />
@@ -429,10 +468,10 @@ export default function DonationPage() {
                 <label className="text-sm font-medium mb-1 block">
                   Email ID <span className="text-red-500">*</span>
                 </label>
-                <Input 
-                  type="email" 
-                  placeholder="Enter your email ID" 
-                  className="bg-gray-50 active:border-blue-500" 
+                <Input
+                  type="email"
+                  placeholder="Enter your email ID"
+                  className="bg-gray-50 active:border-blue-500"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -462,10 +501,10 @@ export default function DonationPage() {
                       ))}
                     </SelectContent>
                   </Select>
-                  <Input 
-                    type="tel" 
-                    placeholder="Enter your contact number" 
-                    className="bg-gray-50 flex-1" 
+                  <Input
+                    type="tel"
+                    placeholder="Enter your contact number"
+                    className="bg-gray-50 flex-1"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
                   />
@@ -480,32 +519,34 @@ export default function DonationPage() {
                 <label className="text-sm font-medium mb-3 block">
                   Enter Amount (in ₹) <span className="text-red-500">*</span>
                 </label>
-                
+
                 {/* Amount Pills */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   {/* Default Amount Pills */}
                   <Button
                     type="button"
-                    variant={selectedAmountPill === "1000" ? "default" : "outline"}
+                    variant={
+                      selectedAmountPill === "1000" ? "default" : "outline"
+                    }
                     className={`h-12 text-sm font-medium ${
-                      selectedAmountPill === "1000" 
-                        ? "bg-primary hover:bg-teal-700 text-white border-primary" 
+                      selectedAmountPill === "1000"
+                        ? "bg-primary hover:bg-teal-700 text-white border-primary"
                         : "bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-200"
                     }`}
                     onClick={() => handleAmountSelect("1000")}
                   >
                     ₹1,000
                   </Button>
-                  
-                 
-                  
+
                   {/* Other Amount Pill */}
                   <Button
                     type="button"
-                    variant={selectedAmountPill === "other" ? "default" : "outline"}
+                    variant={
+                      selectedAmountPill === "other" ? "default" : "outline"
+                    }
                     className={`h-12 text-sm font-medium ${
-                      selectedAmountPill === "other" 
-                        ? "bg-primary hover:bg-teal-700 text-white border-primary" 
+                      selectedAmountPill === "other"
+                        ? "bg-primary hover:bg-teal-700 text-white border-primary"
                         : "bg-gray-50 hover:bg-gray-100 text-gray-700 border-gray-200"
                     }`}
                     onClick={handleOtherAmountClick}
@@ -517,7 +558,9 @@ export default function DonationPage() {
                 {/* Custom Amount Input - Only shown when "Other Amount" is selected */}
                 <div
                   className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                    showCustomAmount ? "max-h-20 opacity-100 mb-3" : "max-h-0 opacity-0 mb-0"
+                    showCustomAmount
+                      ? "max-h-20 opacity-100 mb-3"
+                      : "max-h-0 opacity-0 mb-0"
                   }`}
                 >
                   <div
@@ -529,7 +572,9 @@ export default function DonationPage() {
                       type="number"
                       placeholder="Enter custom amount (min ₹1,000)"
                       className={`bg-gray-50 h-12 ${
-                        customAmountError ? "border-red-300 focus:border-red-500" : ""
+                        customAmountError
+                          ? "border-red-300 focus:border-red-500"
+                          : ""
                       }`}
                       value={amount}
                       onChange={(e) => handleCustomAmountChange(e.target.value)}
@@ -555,7 +600,9 @@ export default function DonationPage() {
                 <Checkbox
                   id="certificate"
                   checked={wantsCertificate}
-                  onCheckedChange={(checked) => setWantsCertificate(checked as boolean)}
+                  onCheckedChange={(checked) =>
+                    setWantsCertificate(checked as boolean)
+                  }
                   className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                 />
                 <label htmlFor="certificate" className="text-sm">
@@ -565,7 +612,9 @@ export default function DonationPage() {
 
               <div
                 className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                  wantsCertificate ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"
+                  wantsCertificate
+                    ? "max-h-[800px] opacity-100"
+                    : "max-h-0 opacity-0"
                 }`}
               >
                 <div
@@ -578,9 +627,9 @@ export default function DonationPage() {
                     <label className="text-sm font-medium mb-1 block">
                       PAN number <span className="text-red-500">*</span>
                     </label>
-                    <Input 
-                      placeholder="Enter PAN number" 
-                      className="bg-gray-50" 
+                    <Input
+                      placeholder="Enter PAN number"
+                      className="bg-gray-50"
                       value={pan}
                       onChange={(e) => setPan(e.target.value)}
                     />
@@ -594,14 +643,16 @@ export default function DonationPage() {
                     <label className="text-sm font-medium mb-1 block">
                       Full Address <span className="text-red-500">*</span>
                     </label>
-                    <Textarea 
-                      placeholder="Enter your full address" 
-                      className="bg-gray-50 min-h-[80px]" 
+                    <Textarea
+                      placeholder="Enter your full address"
+                      className="bg-gray-50 min-h-[80px]"
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
                     />
                     {showErrors && errors.address && (
-                      <p className="text-red-500 text-sm mt-1">{errors.address}</p>
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.address}
+                      </p>
                     )}
                   </div>
 
@@ -610,9 +661,9 @@ export default function DonationPage() {
                     <label className="text-sm font-medium mb-1 block">
                       City <span className="text-red-500">*</span>
                     </label>
-                    <Input 
-                      placeholder="Enter city" 
-                      className="bg-gray-50" 
+                    <Input
+                      placeholder="Enter city"
+                      className="bg-gray-50"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
                     />
@@ -626,14 +677,16 @@ export default function DonationPage() {
                     <label className="text-sm font-medium mb-1 block">
                       State <span className="text-red-500">*</span>
                     </label>
-                    <Input 
-                      placeholder="Enter state" 
-                      className="bg-gray-50" 
+                    <Input
+                      placeholder="Enter state"
+                      className="bg-gray-50"
                       value={state}
                       onChange={(e) => setState(e.target.value)}
                     />
                     {showErrors && errors.state && (
-                      <p className="text-red-500 text-sm mt-1">{errors.state}</p>
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.state}
+                      </p>
                     )}
                   </div>
 
@@ -642,14 +695,16 @@ export default function DonationPage() {
                     <label className="text-sm font-medium mb-1 block">
                       Country <span className="text-red-500">*</span>
                     </label>
-                    <Input 
-                      placeholder="Enter country" 
-                      className="bg-gray-50" 
+                    <Input
+                      placeholder="Enter country"
+                      className="bg-gray-50"
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
                     />
                     {showErrors && errors.country && (
-                      <p className="text-red-500 text-sm mt-1">{errors.country}</p>
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.country}
+                      </p>
                     )}
                   </div>
 
@@ -658,14 +713,16 @@ export default function DonationPage() {
                     <label className="text-sm font-medium mb-1 block">
                       PIN Code <span className="text-red-500">*</span>
                     </label>
-                    <Input 
-                      placeholder="Enter PIN code" 
-                      className="bg-gray-50" 
+                    <Input
+                      placeholder="Enter PIN code"
+                      className="bg-gray-50"
                       value={pinCode}
                       onChange={(e) => setPinCode(e.target.value)}
                     />
                     {showErrors && errors.pinCode && (
-                      <p className="text-red-500 text-sm mt-1">{errors.pinCode}</p>
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.pinCode}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -678,18 +735,20 @@ export default function DonationPage() {
                     id="terms"
                     checked={termsAccepted}
                     onCheckedChange={(checked) => {
-                      setTermsAccepted(checked as boolean)
-                      if (checked) setShowTermsError(false)
+                      setTermsAccepted(checked as boolean);
+                      if (checked) setShowTermsError(false);
                     }}
                     className="data-[state=checked]:bg-primary data-[state=checked]:border-teal-600"
                   />
                   <label htmlFor="terms" className="text-sm">
-                    Confirming Terms & Conditions <span className="text-red-500">*</span>
+                    Confirming Terms & Conditions{" "}
+                    <span className="text-red-500">*</span>
                   </label>
                 </div>
                 {(showTermsError || (showErrors && errors.terms)) && (
                   <p className="text-red-500 text-sm">
-                    {errors.terms || "Please accept the Terms & Conditions to proceed."}
+                    {errors.terms ||
+                      "Please accept the Terms & Conditions to proceed."}
                   </p>
                 )}
               </div>
@@ -706,5 +765,5 @@ export default function DonationPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
