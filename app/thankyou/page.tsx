@@ -73,6 +73,9 @@ function ThankYouContent() {
       .then((response) => {
         setIsLoading(false);
         if (response.data) {
+          if (localStorage.getItem("pending_order_id"))
+            localStorage.removeItem("pending_order_id");
+
           setIsLoading(false);
           setDonationStatus(response.data);
           setStatus(response.data?.payment_details.payment_status);

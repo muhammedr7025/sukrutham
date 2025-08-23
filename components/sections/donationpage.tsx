@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -68,6 +68,15 @@ export default function DonationPage() {
     { code: "+66", country: "Thailand", flag: "🇹🇭" },
   ];
 
+  useEffect(() => {
+    const pending_order_id = localStorage.getItem("pending_order_id");
+    if (pending_order_id) {
+      toast.loading("Getting details of previous transaction ...");
+      setIsLoading(true);
+      router.push("/thankyou?order_id=" + pending_order_id);
+    }
+  }, []);
+
   const handleAmountSelect = (value: string) => {
     setAmount(value);
     setSelectedAmountPill(value);
@@ -104,8 +113,8 @@ export default function DonationPage() {
 
     // Required fields validation
     if (!fullName.trim()) newErrors.fullName = "Full name is required";
-    if (!email.trim()) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(email))
+    // if (!email.trim()) newErrors.email = "Email is required";
+    else if (email && !/\S+@\S+\.\S+/.test(email))
       newErrors.email = "Please enter a valid email";
     if (!contact.trim()) newErrors.contact = "Contact number is required";
     else {
@@ -181,6 +190,10 @@ export default function DonationPage() {
       })
       .then((response) => {
         if (response.data && response.data.payment_url) {
+          localStorage.setItem(
+            "pending_order_id",
+            response.data.merchant_order_id
+          );
           const redirect_url = response.data.payment_url;
           window.location.href = redirect_url;
         } else {
@@ -473,7 +486,8 @@ export default function DonationPage() {
               {/* Email ID */}
               <div>
                 <label className="text-sm font-medium mb-1 block">
-                  Email ID <span className="text-red-500">*</span>
+                  Email ID
+                  {/* <span className="text-red-500">*</span> */}
                 </label>
                 <Input
                   type="email"
