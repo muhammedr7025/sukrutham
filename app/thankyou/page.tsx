@@ -366,14 +366,19 @@ function ThankYouContent() {
           <div className="flex flex-col items-center gap-4 mt-5">
             <p>
               <a
-                href="" onClick={()=>{localStorage.removeItem("pending_order_id");router.push("/");}}
+                href=""
+                onClick={(e) => {
+                  e.preventDefault();
+                  localStorage.removeItem("pending_order_id");
+                  router.push("/");
+                }}
                 className="underline text-blue-400 cursor-pointer"
               >
                 Go back to home page
               </a>
             </p>
-          </div>)
-        }
+          </div>
+        )}
       </div>
     </div>
   );
