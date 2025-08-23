@@ -202,12 +202,14 @@ export default function DonationPage() {
           const redirect_url = response.data.payment_url;
           window.location.href = redirect_url;
         } else {
+          setIsLoading(false);
           toast.error(
             "There was an issue with your donation. Please try again."
           );
         }
       })
       .catch((error) => {
+        setIsLoading(false);
         toast.error(
           "An error occurred while processing your request! Please try again."
         );

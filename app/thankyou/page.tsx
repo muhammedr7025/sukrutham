@@ -104,12 +104,17 @@ function ThankYouContent() {
             response.data?.payment_details.payment_status == "failed"
           ) {
             toast.error("Your payment has failed. Please try again.");
-          } else {
+          } else if (
+            response.data?.payment_details.payment_status == "pending"
+          ) {
             if (response.data?.payment_details.is_payment_url_expired == false)
               setPaymentUrl(response.data?.payment_details.payment_url);
             localStorage.setItem("pending_order_id", order_id);
             toast.error(
-              "There was an issue with your payment status. Please refresh the page."
+              "Your payment is still pending. Please complete the payment. If already done, please refresh the page.",
+              {
+                icon: "⏳",
+              }
             );
           }
         } else {
