@@ -217,12 +217,12 @@ export default function DonationPage() {
   };
 
   return (
-    <div className="min-h-screen lg:h-screen bg-background overflow-hidden ">
+    <div className="min-h-screen bg-background">
       {/* Main Content */}
-      <div className="h-full flex flex-col lg:flex-row px-4 lg:px-16 lg:max-h-screen">
+      <div className="flex flex-col lg:flex-row px-4 lg:px-16">
         {/* Left Column - Image Grid (Fixed on desktop, scrollable on mobile) */}
-        <div className="w-full lg:w-1/2 p-3 lg:p-6 lg:overflow-hidden lg:h-full">
-          <div className="space-y-2 lg:space-y-4 -mt-5 lg:-mt-10 lg:h-full lg:flex lg:flex-col lg:justify-center">
+        <div className="w-full lg:w-1/2 p-3 lg:p-6">
+          <div className="space-y-2 lg:space-y-4 -mt-5 lg:-mt-10 lg:flex lg:flex-col lg:justify-center">
             <div className="space-y-0">
               {/* Row 1: Large image LEFT + 4 small images RIGHT */}
               <div className="flex flex-col sm:flex-row gap-2 lg:gap-0 h-32 sm:h-48">
@@ -460,7 +460,7 @@ export default function DonationPage() {
         </div>
 
         {/* Right Column - Donation Form (Scrollable) */}
-        <div className="w-full lg:w-1/2 h-auto lg:h-full lg:overflow-y-auto lg:overflow-x-hidden p-3 lg:py-24 lg:px-12 ">
+        <div className="w-full lg:w-1/2 p-3 lg:py-24 lg:px-12 ">
           <div className="space-y-6 flex flex-col items-center justify-start lg:justify-center lg:min-h-full py-4 lg:py-0">
             <div className="text-center lg:text-left">
               <h1 className="text-xl lg:text-2xl font-bold mb-2">
