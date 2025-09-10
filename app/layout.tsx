@@ -35,12 +35,19 @@ export default function RootLayout({
           <div className="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Left side */}
             <p className="text-sm text-gray-600">
-              © {new Date().getFullYear()} Sukrutha Keralam. All rights
-              reserved.
+              Made with code and 💛 by{" "}
+              <a
+                href="https://richinnovationsplc.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                Richinnovations
+              </a>
             </p>
 
             {/* Right side (links) */}
-            <div className="flex space-x-6">
+            <div className="flex space-x-6 items-center">
               <Link
                 href="/terms-and-conditions"
                 className="text-sm text-gray-600 hover:text-blue-600 transition-colors"
