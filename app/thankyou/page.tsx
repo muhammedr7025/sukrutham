@@ -41,12 +41,7 @@ function ThankYouContent() {
   useEffect(() => {
     const order_id = searchParams.get("order_id");
     const message = searchParams.get("message");
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    if (!apiUrl) {
-      console.error("NEXT_PUBLIC_API_URL is missing in production!");
-      toast.error("Unable to fetch payment status. Please try again later.");
-      return;
-    }
+
     if (!order_id) {
       if (message) {
         toast.error(message);
@@ -223,7 +218,7 @@ function ThankYouContent() {
         pdf.save(`Sukrutha_Kerala_Certificate_${orderId}.pdf`);
       } catch (error) {
         console.error("Error generating certificate:", error);
-        alert("Error generating certificate. Please try again.");
+        toast.error("Error generating certificate. Please try again.");
       }
     }
   };
