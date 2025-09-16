@@ -527,6 +527,8 @@ export default function DonationPage() {
                   className="bg-gray-50"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
+                  minLength={2}
+                  maxLength={100}
                 />
                 {showErrors && errors.fullName && (
                   <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
@@ -578,6 +580,8 @@ export default function DonationPage() {
                     className="bg-gray-50 flex-1"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
+                    minLength={5}
+                    maxLength={25}
                   />
                 </div>
                 {showErrors && errors.contact && (
@@ -703,6 +707,8 @@ export default function DonationPage() {
                       className="bg-gray-50"
                       value={pan}
                       onChange={(e) => setPan(e.target.value)}
+                      minLength={10}
+                      maxLength={10}
                     />
                     {showErrors && errors.pan && (
                       <p className="text-red-500 text-sm mt-1">{errors.pan}</p>
@@ -719,6 +725,8 @@ export default function DonationPage() {
                       className="bg-gray-50 min-h-[80px]"
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
+                      minLength={5}
+                      maxLength={500}
                     />
                     {showErrors && errors.address && (
                       <p className="text-red-500 text-sm mt-1">
@@ -737,6 +745,8 @@ export default function DonationPage() {
                       className="bg-gray-50"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
+                      minLength={2}
+                      maxLength={100}
                     />
                     {showErrors && errors.city && (
                       <p className="text-red-500 text-sm mt-1">{errors.city}</p>
@@ -753,6 +763,8 @@ export default function DonationPage() {
                       className="bg-gray-50"
                       value={state}
                       onChange={(e) => setState(e.target.value)}
+                      minLength={2}
+                      maxLength={100}
                     />
                     {showErrors && errors.state && (
                       <p className="text-red-500 text-sm mt-1">
@@ -771,6 +783,8 @@ export default function DonationPage() {
                       className="bg-gray-50"
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
+                      minLength={2}
+                      maxLength={100}
                     />
                     {showErrors && errors.country && (
                       <p className="text-red-500 text-sm mt-1">
@@ -789,6 +803,8 @@ export default function DonationPage() {
                       className="bg-gray-50"
                       value={pinCode}
                       onChange={(e) => setPinCode(e.target.value)}
+                      minLength={6}
+                      maxLength={6}
                     />
                     {showErrors && errors.pinCode && (
                       <p className="text-red-500 text-sm mt-1">
