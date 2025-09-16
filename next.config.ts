@@ -25,7 +25,7 @@ const nextConfig: NextConfig = {
               img-src 'self' data: https:;
               font-src 'self' https://fonts.gstatic.com;
               connect-src 'self' ${API_BASE_URL};
-              frame-ancestors 'self';
+              frame-ancestors 'none';
               base-uri 'self';
               form-action 'self' ${SBI_EPAY_URL};
             `.replace(/\s{2,}/g, " "),
