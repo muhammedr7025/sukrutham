@@ -624,7 +624,7 @@ export default function DonationPage() {
               </div>
 
               {/* 80G Certificate Checkbox */}
-              <div className="flex items-center space-x-2">
+              {/* <div className="flex items-center space-x-2">
                 <Checkbox
                   id="certificate"
                   checked={wantsCertificate}
@@ -636,9 +636,9 @@ export default function DonationPage() {
                 <label htmlFor="certificate" className="text-sm">
                   I would like to receive 80(G) Certificate
                 </label>
-              </div>
+              </div> */}
 
-              <div
+              {/* <div
                 className={`overflow-hidden transition-all duration-500 ease-in-out ${
                   wantsCertificate
                     ? "max-h-[800px] opacity-100"
@@ -649,9 +649,9 @@ export default function DonationPage() {
                   className={`space-y-4 transition-transform duration-500 ease-in-out ${
                     wantsCertificate ? "translate-y-0" : "-translate-y-4"
                   }`}
-                >
+                > */}
                   {/* PAN Number */}
-                  <div>
+                  {/* <div>
                     <label className="text-sm font-medium mb-1 block">
                       PAN number <span className="text-red-500">*</span>
                     </label>
@@ -664,10 +664,10 @@ export default function DonationPage() {
                     {showErrors && errors.pan && (
                       <p className="text-red-500 text-sm mt-1">{errors.pan}</p>
                     )}
-                  </div>
+                  </div> */}
 
                   {/* Full Address */}
-                  <div>
+                  {/* <div>
                     <label className="text-sm font-medium mb-1 block">
                       Full Address <span className="text-red-500">*</span>
                     </label>
@@ -682,10 +682,10 @@ export default function DonationPage() {
                         {errors.address}
                       </p>
                     )}
-                  </div>
+                  </div> */}
 
                   {/* City */}
-                  <div>
+                  {/* <div>
                     <label className="text-sm font-medium mb-1 block">
                       City <span className="text-red-500">*</span>
                     </label>
@@ -698,10 +698,10 @@ export default function DonationPage() {
                     {showErrors && errors.city && (
                       <p className="text-red-500 text-sm mt-1">{errors.city}</p>
                     )}
-                  </div>
+                  </div> */}
 
                   {/* State */}
-                  <div>
+                  {/* <div>
                     <label className="text-sm font-medium mb-1 block">
                       State <span className="text-red-500">*</span>
                     </label>
@@ -716,10 +716,10 @@ export default function DonationPage() {
                         {errors.state}
                       </p>
                     )}
-                  </div>
+                  </div> */}
 
                   {/* Country */}
-                  <div>
+                  {/* <div>
                     <label className="text-sm font-medium mb-1 block">
                       Country <span className="text-red-500">*</span>
                     </label>
@@ -734,10 +734,10 @@ export default function DonationPage() {
                         {errors.country}
                       </p>
                     )}
-                  </div>
+                  </div> */}
 
                   {/* PIN Code */}
-                  <div>
+                  {/* <div>
                     <label className="text-sm font-medium mb-1 block">
                       PIN Code <span className="text-red-500">*</span>
                     </label>
@@ -754,7 +754,7 @@ export default function DonationPage() {
                     )}
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* Terms & Conditions Checkbox */}
               <div className="space-y-2">
